@@ -10,6 +10,20 @@ def tables(arr_tables, id_table, seats_number, status)
   arr_tables << Table.new(id_table, seats_number, status)
 end
 
+def show_free_tables(arr_tables)
+  arr_id_tables = []
+  arr_tables.select {|elem| elem.status == 'free'}.each {|elem| arr_id_tables << elem.id_table}
+  arr_id_tables
+end
+
+def reserv_table(arr_tables, id_table)
+  arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'reserv'
+end
+
+def unreserv_table(arr_tables, id_table)
+  arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'free'
+end
+
 tables(arr_tables, 1, 2, 'free')
 tables(arr_tables, 2, 4, 'free')
 tables(arr_tables, 3, 6, 'free')
@@ -42,8 +56,10 @@ puts "bowls - #{stock.arr_bowl.size}"
 puts "amount of tobacco - #{stock.arr_tobacco.size}"
 puts "amount of charcoals - #{stock.charcoals}"
 
-arr_tables.each {|elem| elem.status = 'reserv'} # бронирование всех мест
-(arr_tables.select {|elem| elem.id_table == 2}).first.status = 'free' #не только бронированить, но и освобождать стол
+reserv_table(arr_tables, 2)
+reserv_table(arr_tables, 4)
+reserv_table(arr_tables, 1)
+unreserv_table(arr_tables,1)
 
-p arr_tables
+puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 
