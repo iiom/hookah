@@ -1,6 +1,8 @@
 require_relative 'lib/table'
 require_relative 'lib/hookah'
 require_relative 'lib/bowl'
+require_relative 'lib/store'
+
 puts '---------Table------------'
 p Table.new(1, 4, 'free')
 p Table.new(1, 2, 'free')
@@ -18,3 +20,5 @@ p Bowl.new('earthenware')
 p Bowl.new('ceramic')
 p Bowl.new('vortex')
 p Bowl.new('silicone')
+puts '--------STOCk------------'
+p Stock.new
