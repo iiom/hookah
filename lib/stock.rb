@@ -1,9 +1,8 @@
 class Stock
-
   attr_accessor :charcoals, :arr_bowl, :arr_hookah, :arr_tobacco
 
   def initialize
-    @charcoals  = 0
+    @charcoals = 0
     @arr_bowl = []
     @arr_hookah = []
     @arr_tobacco = []
