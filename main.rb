@@ -24,12 +24,19 @@ def unreserv_table(arr_tables, id_table)
   arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'free'
 end
 
-def reserv_hookah(stock, name_hookah = nil)
+reserv_hookahs = []
+def reserv_hookah(reserv_hookahs, stock, name_hookah = nil)
   name_hookah = stock.arr_hookah.sample.name if name_hookah == nil
-  stock.arr_hookah.select {|i| i.name == name_hookah}.first.status = 'reserv'
+  reserv_hookahs << stock.arr_hookah.select {|i| i.name == name_hookah}
+  stock.arr_hookah.delete_if {|i| i.name == name_hookah}
+  reserv_hookahs.flatten!
+  reserv_hookahs.select {|i| i.name == name_hookah}.first.status = 'reserv'
 end
 
-def unreserv_hookah(stock, name_hookah)
+def unreserv_hookah(reserv_hookahs, stock, name_hookah)
+  stock.arr_hookah << reserv_hookahs.select {|i| i.name == name_hookah}
+  reserv_hookahs.delete_if {|i| i.name == name_hookah}
+  stock.arr_hookah.flatten!
   stock.arr_hookah.select {|i| i.name == name_hookah}.first.status = 'free'
 end
 
@@ -70,7 +77,7 @@ stock.tobacco('WTO', 200, 700)
 
 puts "amount of tables - #{arr_tables.size}"
 puts "hookahs - #{stock.arr_hookah.size}"
-puts "bowls - #{stock.arr_bowl.size}"
+puts "bowls - #{stock.arr_bowls.size}"
 puts "amount of tobacco - #{stock.arr_tobacco.size}"
 puts "amount of charcoals - #{stock.charcoals}"
 
@@ -81,4 +88,8 @@ unreserv_table(arr_tables,1)
 
 puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 
-reserv_hookah(stock)
+reserv_hookah(reserv_hookahs, stock)
+reserv_hookah(reserv_hookahs, stock)
+reserv_bowl(stock)
+p stock.arr_hookah
+p reserv_hookahs
