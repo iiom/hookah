@@ -5,7 +5,6 @@ require_relative 'lib/stock'
 require_relative 'lib/tobacco'
 
 arr_tables = []
-
 def tables(arr_tables, id_table, seats_number, status)
   arr_tables << Table.new(id_table, seats_number, status)
 end
@@ -18,6 +17,7 @@ end
 
 def reserv_table(arr_tables, id_table)
   arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'reserv'
+  puts "no more free table" if show_free_tables(arr_tables).size == 0
 end
 
 def unreserv_table(arr_tables, id_table)
