@@ -24,8 +24,22 @@ def unreserv_table(arr_tables, id_table)
   arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'free'
 end
 
-def order(stock, name_hookah)
-  stock.hookahs.select {|i| i.name == name_hookah}.first.status = 'reserv'
+def reserv_hookah(stock, name_hookah = nil)
+  name_hookah = stock.arr_hookah.sample.name if name_hookah == nil
+  stock.arr_hookah.select {|i| i.name == name_hookah}.first.status = 'reserv'
+end
+
+def unreserv_hookah(stock, name_hookah)
+  stock.arr_hookah.select {|i| i.name == name_hookah}.first.status = 'free'
+end
+
+def reserv_bowl(stock, type_bowl = nil)
+  type_bowl = stock.arr_bowls.sample.type if type_bowl == nil
+  stock.arr_bowls.select {|i| i.type == type_bowl}.first.status = 'reserv'
+end
+
+def unreserv_bowl(stock, type_bowl)
+  stock.arr_bowls.select {|i| i.type == type_bowl}.first.status = 'free'
 end
 
 tables(arr_tables, 1, 2, 'free')
@@ -67,4 +81,4 @@ unreserv_table(arr_tables,1)
 
 puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 
-order(stock)
+reserv_hookah(stock)
