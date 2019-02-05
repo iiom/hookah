@@ -1,7 +1,7 @@
 require_relative 'lib/table'
 require_relative 'lib/hookah'
 require_relative 'lib/bowl'
-require_relative 'lib/store'
+require_relative 'lib/stock'
 
 puts '---------Table------------'
 p Table.new(1, 4, 'free')
