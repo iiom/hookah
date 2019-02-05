@@ -1,30 +1,16 @@
 class Stock
-  attr_accessor :wto, :dokha, :d_mini, :adalya, :nakhla, :al_fakher, :dark_side, :charcoal
 
   def initialize
-    @wto       = 0
-    @dokha     = 0
-    @adalya    = 0
-    @d_mini    = 0
-    @nakhla    = 0
-    @al_fakher = 0
-    @dark_side = 0
     @charcoal  = 0
   end
 
-  def tobacco(name, amount)
-    @wto += amount if name == 'wto'
-    @dokha += amount if name == 'dokha'
-    @nakhla += amount if name == 'nakhla'
-    @adalya += amount if name == 'adalya'
-    @d_mini += amount if name == 'd_mini'
-    @charcoal += amount if name == 'charcoal'
-    @al_fakher += amount if name == 'al_faker'
-    @dark_side += amount if name == 'dark_side'
+  def tobacco(name, amount, price)
+    arr_tobacco ||= []
+    arr_tobacco << Tobacco.new(name, amount, price)
+    arr_tobacco
   end
 
   def charcoals(charcoal)
-    @charcoal ||= 0
     @charcoal += charcoal
   end
 
