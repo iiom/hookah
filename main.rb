@@ -26,18 +26,18 @@ end
 
 reserv_hookahs = []
 def reserv_hookah(reserv_hookahs, stock, name_hookah = nil)
-  name_hookah = stock.arr_hookah.sample.name if name_hookah == nil
-  reserv_hookahs << stock.arr_hookah.select {|i| i.name == name_hookah}
-  stock.arr_hookah.delete_if {|i| i.name == name_hookah}
+  name_hookah = stock.arr_hookahs.sample.name if name_hookah == nil
+  reserv_hookahs << stock.arr_hookahs.select {|i| i.name == name_hookah}
+  stock.arr_hookahs.delete_if {|i| i.name == name_hookah}
   reserv_hookahs.flatten!
   reserv_hookahs.select {|i| i.name == name_hookah}.first.status = 'reserv'
 end
 
 def unreserv_hookah(reserv_hookahs, stock, name_hookah)
-  stock.arr_hookah << reserv_hookahs.select {|i| i.name == name_hookah}
+  stock.arr_hookahs << reserv_hookahs.select {|i| i.name == name_hookah}
   reserv_hookahs.delete_if {|i| i.name == name_hookah}
-  stock.arr_hookah.flatten!
-  stock.arr_hookah.select {|i| i.name == name_hookah}.first.status = 'free'
+  stock.arr_hookahs.flatten!
+  stock.arr_hookahs.select {|i| i.name == name_hookah}.first.status = 'free'
 end
 
 def reserv_bowl(stock, type_bowl = nil)
@@ -76,7 +76,7 @@ stock.tobacco('Nakhla', 180, 600)
 stock.tobacco('WTO', 200, 700)
 
 puts "amount of tables - #{arr_tables.size}"
-puts "hookahs - #{stock.arr_hookah.size}"
+puts "hookahs - #{stock.arr_hookahs.size}"
 puts "bowls - #{stock.arr_bowls.size}"
 puts "amount of tobacco - #{stock.arr_tobacco.size}"
 puts "amount of charcoals - #{stock.charcoals}"
@@ -91,5 +91,5 @@ puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 reserv_hookah(reserv_hookahs, stock)
 reserv_hookah(reserv_hookahs, stock)
 reserv_bowl(stock)
-p stock.arr_hookah
+p stock.arr_hookahs
 p reserv_hookahs

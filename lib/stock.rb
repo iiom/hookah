@@ -1,10 +1,10 @@
 class Stock
-  attr_accessor :charcoals, :arr_bowls, :arr_hookah, :arr_tobacco
+  attr_accessor :charcoals, :arr_bowls, :arr_hookahs, :arr_tobacco
 
   def initialize
     @charcoals = 0
     @arr_bowls = []
-    @arr_hookah = []
+    @arr_hookahs = []
     @arr_tobacco = []
   end
 
@@ -17,7 +17,7 @@ class Stock
   end
 
   def hookahs(name)
-    @arr_hookah << Hookah.new(name)
+    @arr_hookahs << Hookah.new(name)
   end
 
   def bowls(type)
