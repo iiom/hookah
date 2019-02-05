@@ -17,4 +17,16 @@ tables(arr_tables, 5,6, 'free')
 puts arr_tables
 
 puts '--------STOCk------------'
-p Stock.new
+stock = Stock.new
+stock.charcoals(900)
+stock.hookahs('Khalil Mamoon')
+stock.hookahs('Siriyan')
+stock.hookahs('Fabula')
+stock.hookahs('Meduse')
+stock.hookahs('Fumo')
+stock.bowls('Earthenware')
+stock.bowls('Phunnel')
+stock.bowls('Ceramic')
+stock.bowls('Vortex')
+stock.bowls('Silicon')
+p stock
