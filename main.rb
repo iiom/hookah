@@ -40,3 +40,8 @@ puts "hookahs - #{stock.arr_hookah.size}"
 puts "bowls - #{stock.arr_bowl.size}"
 puts "amount of tobacco - #{stock.arr_tobacco.size}"
 puts "amount of charcoals - #{stock.charcoals}"
+
+puts "little charcoal #{stock.charcoals}" if stock.charcoals < 100
+
+
+puts "little tobacco #{stock.charcoals}" if stock.charcoals < 100
