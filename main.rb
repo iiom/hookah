@@ -40,12 +40,19 @@ def unreserv_hookah(reserv_hookahs, stock, name_hookah)
   stock.arr_hookahs.select {|i| i.name == name_hookah}.first.status = 'free'
 end
 
-def reserv_bowl(stock, type_bowl = nil)
+reserv_bowls = []
+def reserv_bowl(reserv_bowls, stock, type_bowl = nil)
   type_bowl = stock.arr_bowls.sample.type if type_bowl == nil
-  stock.arr_bowls.select {|i| i.type == type_bowl}.first.status = 'reserv'
+  reserv_bowls << stock.arr_bowls.select {|i| i.type == type_bowl}
+  stock.arr_bowls.delete_if {|i| i.type == type_bowl}
+  reserv_bowls.flatten!
+  reserv_bowls.select {|i| i.type == type_bowl}.first.status = 'reserv'
 end
 
-def unreserv_bowl(stock, type_bowl)
+def unreserv_bowl(reserv_bowls, stock, type_bowl)
+  stock.arr_bowls << reserv_bowls.select {|i| i.type == type_bowl}
+  reserv_bowls.delete_if {|i| i.type == type_bowl}
+  stock.arr_bowls.flatten!
   stock.arr_bowls.select {|i| i.type == type_bowl}.first.status = 'free'
 end
 
@@ -89,7 +96,7 @@ unreserv_table(arr_tables,1)
 puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 
 reserv_hookah(reserv_hookahs, stock)
-reserv_hookah(reserv_hookahs, stock)
-reserv_bowl(stock)
-p stock.arr_hookahs
-p reserv_hookahs
+reserv_bowl(reserv_bowls, stock)
+
+
+
