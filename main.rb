@@ -24,6 +24,10 @@ def unreserv_table(arr_tables, id_table)
   arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'free'
 end
 
+def order(stock, name_hookah)
+  stock.hookahs.select {|i| i.name == name_hookah}.first.status = 'reserv'
+end
+
 tables(arr_tables, 1, 2, 'free')
 tables(arr_tables, 2, 4, 'free')
 tables(arr_tables, 3, 6, 'free')
@@ -63,3 +67,4 @@ unreserv_table(arr_tables,1)
 
 puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 
+order(stock)
