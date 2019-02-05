@@ -4,21 +4,16 @@ require_relative 'lib/bowl'
 require_relative 'lib/stock'
 
 puts '---------Table------------'
-p Table.new(1, 4, 'free')
-p Table.new(1, 2, 'free')
-p Table.new(1, 8, 'free')
-p Table.new(1, 4, 'free')
-p Table.new(1, 2, 'free')
-puts '--------HOOKAH------------'
-p Hookah.new('Khalil Mamoon')
-p Hookah.new('MEDUSE')
-p Hookah.new('FUMO')
-p Hookah.new('Fabula')
-p Hookah.new('Syrian')
-puts '---------BOWL-------------'
-p Bowl.new('earthenware')
-p Bowl.new('ceramic')
-p Bowl.new('vortex')
-p Bowl.new('silicone')
+arr_tables = []
+def tables(arr_tables, arg1, arg2, status)
+  arr_tables << Table.new(arg1, arg2, status)
+end
+tables(arr_tables, 1,2, 'free')
+tables(arr_tables, 2,4, 'free')
+tables(arr_tables, 3,6, 'free')
+tables(arr_tables, 4,4, 'free')
+tables(arr_tables, 5,6, 'free')
+puts arr_tables
+
 puts '--------STOCk------------'
 p Stock.new
