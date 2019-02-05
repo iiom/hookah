@@ -1,0 +1,3 @@
+class Hookah
+
+end
