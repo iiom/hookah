@@ -18,7 +18,7 @@ puts arr_tables
 
 puts '--------STOCk------------'
 stock = Stock.new
-stock.charcoals(900)
+stock.add_charcoals(900)
 stock.hookahs('Khalil Mamoon')
 stock.hookahs('Siriyan')
 stock.hookahs('Fabula')
@@ -30,7 +30,7 @@ stock.bowls('Ceramic')
 stock.bowls('Vortex')
 stock.bowls('Silicon')
 
-puts stock.arr_hookah
-puts stock.arr_bowl
-puts stock.arr_tobacco
-puts stock.charcoal
+p stock.arr_hookah
+p stock.arr_bowl
+p stock.arr_tobacco
+p stock.charcoals
