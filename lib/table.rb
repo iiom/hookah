@@ -2,9 +2,9 @@ class Table
   attr_reader :id_table, :seats_number
   attr_accessor :status
 
-  def initialize(arg1, arg2, status)
-    @id_table     = arg1
-    @seats_number = arg2
+  def initialize(id_table, seats_number, status)
+    @id_table     = id_table
+    @seats_number = seats_number
     @status       = status
   end
 end
