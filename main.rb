@@ -29,4 +29,8 @@ stock.bowls('Phunnel')
 stock.bowls('Ceramic')
 stock.bowls('Vortex')
 stock.bowls('Silicon')
-p stock
+
+puts stock.arr_hookah
+puts stock.arr_bowl
+puts stock.arr_tobacco
+puts stock.charcoal
