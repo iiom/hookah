@@ -10,23 +10,22 @@ def tables(arr_tables, id_table, seats_number, status)
   arr_tables << Table.new(id_table, seats_number, status)
 end
 
-def show_free_tables(arr_tables)
-  arr_id_tables = []
-  arr_tables.select {|elem| elem.status == 'free'}.each {|elem| arr_id_tables << elem.id_table}
-  arr_id_tables
+def show_id(where, type)
+  temp_arr_id = []
+  where.select {|elem| elem.status == type}.each {|elem| temp_arr_id << elem.id}
+  temp_arr_id
 end
 
-def reserv_table(arr_tables, id_table)
-  arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'reserv'
-  puts "no more free table" if show_free_tables(arr_tables).size == 0
+def reserv_table(arr_tables, id)
+  arr_tables.select {|elem| elem.id == id}.first.status = 'reserv'
+  puts "no more free table" if show_id(arr_tables, 'free').size == 0
 end
 
-def unreserv_table(arr_tables, id_table)
-  arr_tables.select {|elem| elem.id_table == id_table}.first.status = 'free'
+def unreserv_table(arr_tables, id)
+  arr_tables.select {|elem| elem.id == id}.first.status = 'free'
 end
 
 reserv_hookahs = []
-
 def reserv_hookah(reserv_hookahs, stock, name_hookah = nil, id = nil)
   id = stock.arr_hookahs.sample.id if name_hookah == nil && id == nil
   id = stock.arr_hookahs.sample.name if name_hookah != nil && id == nil
@@ -101,20 +100,24 @@ reserv_table(arr_tables, 2)
 reserv_table(arr_tables, 4)
 reserv_table(arr_tables, 1)
 unreserv_table(arr_tables, 1)
-
-puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
-
 reserv_hookah(reserv_hookahs, stock, nil, 3)
 reserv_hookah(reserv_hookahs, stock, nil, 4)
 unreserv_hookah(reserv_hookahs, stock,4)
-
 reserv_bowl(reserv_bowls, stock)
 choice_tobaco(stock, 'Dark_Side')
 
-p stock.arr_hookahs
-p stock.arr_hookahs.size
-p reserv_hookahs
-p reserv_hookahs.size
+puts '_______________________________'
+puts "free tables #: #{show_id(arr_tables, 'free').join(', ')}; "+
+"reserved tables #: #{show_id(arr_tables, 'reserv').join(', ')}"
+puts "free hookah #: #{show_id(stock.arr_hookahs, 'free').join(', ')}; "+
+"reserved hookah #: #{show_id(reserv_hookahs, 'reserv').join(', ')}"
+puts "free bowls #: #{show_id(stock.arr_bowls, 'free').join(', ')}; "+
+"reserved bowls #: #{show_id(reserv_bowls, 'reserv').join(', ')}"
+puts '_______________________________'
+
+
+
+
 
 
 
