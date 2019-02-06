@@ -28,7 +28,7 @@ end
 reserv_hookahs = []
 def reserv_hookah(reserv_hookahs, stock, name_hookah = nil, id = nil)
   id = stock.arr_hookahs.sample.id if name_hookah == nil && id == nil
-  id = stock.arr_hookahs.sample.name if name_hookah != nil && id == nil
+  id = stock.arr_hookahs.select {|i| i.name == name_hookah}.first.id if name_hookah != nil && id == nil
   (reserv_hookahs << stock.arr_hookahs.select {|i| i.id == id}).flatten!
   stock.arr_hookahs.delete_if {|i| i.id == id}
   reserv_hookahs.select {|i| i.id == id}.first.status = 'reserv'
