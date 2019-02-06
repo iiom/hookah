@@ -39,23 +39,24 @@ def unreserv_hookah(reserv_hookahs, stock, id)
   reserv_hookahs.delete_if {|i| i.id == id}
   stock.arr_hookahs.select {|i| i.id == id}.first.status = 'free'
 end
-
+##############################################################
 reserv_bowls = []
-def reserv_bowl(reserv_bowls, stock, type_bowl = nil)
-  type_bowl = stock.arr_bowls.sample.type if type_bowl == nil
-  reserv_bowls << stock.arr_bowls.select {|i| i.type == type_bowl}
-  stock.arr_bowls.delete_if {|i| i.type == type_bowl}
+def reserv_bowl(reserv_bowls, stock, type_bowl = nil, id = nil)
+  id = stock.arr_bowls.sample.id if type_bowl == nil && id == nil
+  id = stock.arr_bowls.select {|i| i.type == type_bowl}.first.id if type_bowl != nil && id == nil
+  reserv_bowls << stock.arr_bowls.select {|i| i.id == id}
+  stock.arr_bowls.delete_if {|i| i.id == id}
   reserv_bowls.flatten!
-  reserv_bowls.select {|i| i.type == type_bowl}.first.status = 'reserv'
+  reserv_bowls.select {|i| i.id == id}.first.status = 'reserv'
 end
 
-def unreserv_bowl(reserv_bowls, stock, type_bowl)
-  stock.arr_bowls << reserv_bowls.select {|i| i.type == type_bowl}
-  reserv_bowls.delete_if {|i| i.type == type_bowl}
+def unreserv_bowl(reserv_bowls, stock, id)
+  stock.arr_bowls << reserv_bowls.select {|i| i.id == id}
+  reserv_bowls.delete_if {|i| i.id == id}
   stock.arr_bowls.flatten!
-  stock.arr_bowls.select {|i| i.type == type_bowl}.first.status = 'free'
+  stock.arr_bowls.select {|i| i.id == id}.first.status = 'free'
 end
-
+###############################################################
 def choice_tobaco(stock, name)
   stock.arr_tobacco.select {|i| i.name == name}.first.amount -= 20
   stock.charcoals -= 8
@@ -103,7 +104,11 @@ unreserv_table(arr_tables, 1)
 reserv_hookah(reserv_hookahs, stock, nil, 3)
 reserv_hookah(reserv_hookahs, stock, nil, 4)
 unreserv_hookah(reserv_hookahs, stock,4)
+
+reserv_bowl(reserv_bowls, stock, nil, 2)
 reserv_bowl(reserv_bowls, stock)
+unreserv_bowl(reserv_bowls, stock, 2)
+
 choice_tobaco(stock, 'Dark_Side')
 
 puts '_______________________________'
