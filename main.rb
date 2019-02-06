@@ -27,23 +27,21 @@ end
 
 reserv_hookahs = []
 
-def reserv_hookah(reserv_hookahs, stock, name_hookah = nil)
-  name_hookah = stock.arr_hookahs.sample.name if name_hookah == nil
-  reserv_hookahs << stock.arr_hookahs.select {|i| i.name == name_hookah}.first
-  stock.arr_hookahs.delete_if {|i| i.name == name_hookah}
-  reserv_hookahs.flatten!
-  reserv_hookahs.select {|i| i.name == name_hookah}.first.status = 'reserv'
+def reserv_hookah(reserv_hookahs, stock, name_hookah = nil, id = nil)
+  id = stock.arr_hookahs.sample.id if name_hookah == nil && id == nil
+  id = stock.arr_hookahs.sample.name if name_hookah != nil && id == nil
+  (reserv_hookahs << stock.arr_hookahs.select {|i| i.id == id}).flatten!
+  stock.arr_hookahs.delete_if {|i| i.id == id}
+  reserv_hookahs.select {|i| i.id == id}.first.status = 'reserv'
 end
 
-def unreserv_hookah(reserv_hookahs, stock, name_hookah)
-  stock.arr_hookahs << reserv_hookahs.select {|i| i.name == name_hookah}.first
-  reserv_hookahs.delete_if {|i| i.name == name_hookah}
-  stock.arr_hookahs.flatten!
-  stock.arr_hookahs.select {|i| i.name == name_hookah}.first.status = 'free'
+def unreserv_hookah(reserv_hookahs, stock, id)
+  (stock.arr_hookahs << reserv_hookahs.select {|i| i.id == id}).flatten!
+  reserv_hookahs.delete_if {|i| i.id == id}
+  stock.arr_hookahs.select {|i| i.id == id}.first.status = 'free'
 end
 
 reserv_bowls = []
-
 def reserv_bowl(reserv_bowls, stock, type_bowl = nil)
   type_bowl = stock.arr_bowls.sample.type if type_bowl == nil
   reserv_bowls << stock.arr_bowls.select {|i| i.type == type_bowl}
@@ -106,9 +104,13 @@ unreserv_table(arr_tables, 1)
 
 puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 
-reserv_hookah(reserv_hookahs, stock)
+reserv_hookah(reserv_hookahs, stock, nil, 3)
+reserv_hookah(reserv_hookahs, stock, nil, 4)
+unreserv_hookah(reserv_hookahs, stock,4)
+
 reserv_bowl(reserv_bowls, stock)
 choice_tobaco(stock, 'Dark_Side')
+
 p stock.arr_hookahs
 p stock.arr_hookahs.size
 p reserv_hookahs
