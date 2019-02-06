@@ -59,8 +59,7 @@ def unreserv_bowl(reserv_bowls, stock, type_bowl)
   stock.arr_bowls.select {|i| i.type == type_bowl}.first.status = 'free'
 end
 
-def choice_tobaco(stock, name = nil)
-  name = stock.arr_tobacco.sample.name if name == nil
+def choice_tobaco(stock, name)
   stock.arr_tobacco.select {|i| i.name == name}.first.amount -= 20
   stock.charcoals -= 8
 end
