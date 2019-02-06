@@ -44,16 +44,14 @@ reserv_bowls = []
 def reserv_bowl(reserv_bowls, stock, type_bowl = nil, id = nil)
   id = stock.arr_bowls.sample.id if type_bowl == nil && id == nil
   id = stock.arr_bowls.select {|i| i.type == type_bowl}.first.id if type_bowl != nil && id == nil
-  reserv_bowls << stock.arr_bowls.select {|i| i.id == id}
+  (reserv_bowls << stock.arr_bowls.select {|i| i.id == id}).flatten!
   stock.arr_bowls.delete_if {|i| i.id == id}
-  reserv_bowls.flatten!
   reserv_bowls.select {|i| i.id == id}.first.status = 'reserv'
 end
 
 def unreserv_bowl(reserv_bowls, stock, id)
-  stock.arr_bowls << reserv_bowls.select {|i| i.id == id}
+  (stock.arr_bowls << reserv_bowls.select {|i| i.id == id}).flatten!
   reserv_bowls.delete_if {|i| i.id == id}
-  stock.arr_bowls.flatten!
   stock.arr_bowls.select {|i| i.id == id}.first.status = 'free'
 end
 ###############################################################
