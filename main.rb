@@ -26,6 +26,7 @@ def unreserv_table(arr_tables, id)
 end
 
 reserved_hookahs = []
+
 def reserv_hookah(reserved_hookahs, stock, name_hookah = nil, id = nil)
   id = stock.arr_hookahs.sample.id if name_hookah == nil && id == nil
   id = stock.arr_hookahs.select {|i| i.name == name_hookah}.first.id if name_hookah != nil && id == nil
@@ -39,10 +40,17 @@ def unreserv_hookah(reserved_hookahs, stock, id)
   reserved_hookahs.delete_if {|i| i.id == id}
   stock.arr_hookahs.select {|i| i.id == id}.first.status = 'free'
 end
-##############################################################
+
 reserved_bowls = []
+
 def reserv_bowl(reserved_bowls, stock, type_bowl = nil, id = nil)
   id = stock.arr_bowls.sample.id if type_bowl == nil && id == nil
+  if type_bowl == nil && id == nil
+    array = []
+    stock.arr_bowls.each {|i| array  << i.type}
+    type_max = array.each_with_object({}) {|item, memo| memo[item] = array.count(item)}.max_by{|k, v| v}.first
+    p id = stock.arr_bowls.select {|i| i.type == type_max }.sample.id
+  end
   id = stock.arr_bowls.select {|i| i.type == type_bowl}.first.id if type_bowl != nil && id == nil
   (reserved_bowls << stock.arr_bowls.select {|i| i.id == id}).flatten!
   stock.arr_bowls.delete_if {|i| i.id == id}
@@ -54,7 +62,7 @@ def unreserv_bowl(reserved_bowls, stock, id)
   reserved_bowls.delete_if {|i| i.id == id}
   stock.arr_bowls.select {|i| i.id == id}.first.status = 'free'
 end
-###############################################################
+
 def choice_tobaco(stock, name)
   stock.arr_tobacco.select {|i| i.name == name}.first.amount -= 20
   stock.charcoals -= 8
@@ -69,18 +77,18 @@ tables(arr_tables, 5, 6, 'free')
 stock = Stock.new
 stock.add_charcoals(900)
 stock.hookahs('Khalil Mamoon', 1)
-stock.hookahs('Khalil Mamoon',2)
-stock.hookahs('Khalil Mamoon',3)
-stock.hookahs('Siriyan',4)
-stock.hookahs('Fabula',5)
-stock.hookahs('Meduse',6)
-stock.hookahs('Fumo',7)
-stock.bowls('Earthenware',1)
-stock.bowls('Phunnel',2)
-stock.bowls('Ceramic',3)
-stock.bowls('Ceramic',4)
-stock.bowls('Vortex',5)
-stock.bowls('Silicon',6)
+stock.hookahs('Khalil Mamoon', 2)
+stock.hookahs('Khalil Mamoon', 3)
+stock.hookahs('Siriyan', 4)
+stock.hookahs('Fabula', 5)
+stock.hookahs('Meduse', 6)
+stock.hookahs('Fumo', 7)
+stock.bowls('Earthenware', 1)
+stock.bowls('Phunnel', 2)
+stock.bowls('Ceramic', 3)
+stock.bowls('Ceramic', 4)
+stock.bowls('Vortex', 5)
+stock.bowls('Silicon', 6)
 stock.tobacco('Adaliya', 10, 500)
 stock.tobacco('Al_Fakher', 220, 800)
 stock.tobacco('D_mini', 160, 550)
@@ -101,7 +109,7 @@ reserv_table(arr_tables, 1)
 unreserv_table(arr_tables, 1)
 reserv_hookah(reserved_hookahs, stock, nil, 3)
 reserv_hookah(reserved_hookahs, stock, nil, 4)
-unreserv_hookah(reserved_hookahs, stock,4)
+unreserv_hookah(reserved_hookahs, stock, 4)
 
 reserv_bowl(reserved_bowls, stock, nil, 2)
 reserv_bowl(reserved_bowls, stock)
@@ -110,12 +118,12 @@ unreserv_bowl(reserved_bowls, stock, 2)
 choice_tobaco(stock, 'Dark_Side')
 
 puts '_______________________________'
-puts "free tables #: #{show_id(arr_tables, 'free').join(', ')}; "+
-"reserved tables #: #{show_id(arr_tables, 'reserv').join(', ')}"
-puts "free hookah #: #{show_id(stock.arr_hookahs, 'free').join(', ')}; "+
-"reserved hookah #: #{show_id(reserved_hookahs, 'reserv').join(', ')}"
-puts "free bowls #: #{show_id(stock.arr_bowls, 'free').join(', ')}; "+
-"reserved bowls #: #{show_id(reserved_bowls, 'reserv').join(', ')}"
+puts "free tables #: #{show_id(arr_tables, 'free').join(', ')}; " +
+         "reserved tables #: #{show_id(arr_tables, 'reserv').join(', ')}"
+puts "free hookah #: #{show_id(stock.arr_hookahs, 'free').join(', ')}; " +
+         "reserved hookah #: #{show_id(reserved_hookahs, 'reserv').join(', ')}"
+puts "free bowls #: #{show_id(stock.arr_bowls, 'free').join(', ')}; " +
+         "reserved bowls #: #{show_id(reserved_bowls, 'reserv').join(', ')}"
 puts '_______________________________'
 
 
