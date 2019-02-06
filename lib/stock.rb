@@ -16,11 +16,11 @@ class Stock
     @charcoals += amount
   end
 
-  def hookahs(name)
-    @arr_hookahs << Hookah.new(name)
+  def hookahs(name, id)
+    @arr_hookahs << Hookah.new(name, id)
   end
 
-  def bowls(type)
-    @arr_bowls << Bowl.new(type)
+  def bowls(type, id)
+    @arr_bowls << Bowl.new(type, id)
   end
 end
