@@ -29,14 +29,14 @@ reserv_hookahs = []
 
 def reserv_hookah(reserv_hookahs, stock, name_hookah = nil)
   name_hookah = stock.arr_hookahs.sample.name if name_hookah == nil
-  reserv_hookahs << stock.arr_hookahs.select {|i| i.name == name_hookah}
+  reserv_hookahs << stock.arr_hookahs.select {|i| i.name == name_hookah}.first
   stock.arr_hookahs.delete_if {|i| i.name == name_hookah}
   reserv_hookahs.flatten!
   reserv_hookahs.select {|i| i.name == name_hookah}.first.status = 'reserv'
 end
 
 def unreserv_hookah(reserv_hookahs, stock, name_hookah)
-  stock.arr_hookahs << reserv_hookahs.select {|i| i.name == name_hookah}
+  stock.arr_hookahs << reserv_hookahs.select {|i| i.name == name_hookah}.first
   reserv_hookahs.delete_if {|i| i.name == name_hookah}
   stock.arr_hookahs.flatten!
   stock.arr_hookahs.select {|i| i.name == name_hookah}.first.status = 'free'
@@ -73,12 +73,15 @@ tables(arr_tables, 5, 6, 'free')
 stock = Stock.new
 stock.add_charcoals(900)
 stock.hookahs('Khalil Mamoon')
+stock.hookahs('Khalil Mamoon')
+stock.hookahs('Khalil Mamoon')
 stock.hookahs('Siriyan')
 stock.hookahs('Fabula')
 stock.hookahs('Meduse')
 stock.hookahs('Fumo')
 stock.bowls('Earthenware')
 stock.bowls('Phunnel')
+stock.bowls('Ceramic')
 stock.bowls('Ceramic')
 stock.bowls('Vortex')
 stock.bowls('Silicon')
@@ -106,7 +109,10 @@ puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 reserv_hookah(reserv_hookahs, stock)
 reserv_bowl(reserv_bowls, stock)
 choice_tobaco(stock, 'Dark_Side')
-p stock.arr_tobacco
+p stock.arr_hookahs
+p stock.arr_hookahs.size
+p reserv_hookahs
+p reserv_hookahs.size
 
 
 
