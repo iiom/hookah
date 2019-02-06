@@ -8,8 +8,8 @@ class Stock
     @arr_tobacco = []
   end
 
-  def tobacco(name, amount, price)
-    @arr_tobacco << Tobacco.new(name, amount, price)
+  def tobacco(name, price, amount)
+    @arr_tobacco << Tobacco.new(name, price, amount)
   end
 
   def add_charcoals(amount)

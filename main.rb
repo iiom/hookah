@@ -5,6 +5,7 @@ require_relative 'lib/stock'
 require_relative 'lib/tobacco'
 
 arr_tables = []
+
 def tables(arr_tables, id_table, seats_number, status)
   arr_tables << Table.new(id_table, seats_number, status)
 end
@@ -25,6 +26,7 @@ def unreserv_table(arr_tables, id_table)
 end
 
 reserv_hookahs = []
+
 def reserv_hookah(reserv_hookahs, stock, name_hookah = nil)
   name_hookah = stock.arr_hookahs.sample.name if name_hookah == nil
   reserv_hookahs << stock.arr_hookahs.select {|i| i.name == name_hookah}
@@ -41,6 +43,7 @@ def unreserv_hookah(reserv_hookahs, stock, name_hookah)
 end
 
 reserv_bowls = []
+
 def reserv_bowl(reserv_bowls, stock, type_bowl = nil)
   type_bowl = stock.arr_bowls.sample.type if type_bowl == nil
   reserv_bowls << stock.arr_bowls.select {|i| i.type == type_bowl}
@@ -54,6 +57,12 @@ def unreserv_bowl(reserv_bowls, stock, type_bowl)
   reserv_bowls.delete_if {|i| i.type == type_bowl}
   stock.arr_bowls.flatten!
   stock.arr_bowls.select {|i| i.type == type_bowl}.first.status = 'free'
+end
+
+def choice_tobaco(stock, name = nil)
+  name = stock.arr_tobacco.sample.name if name == nil
+  stock.arr_tobacco.select {|i| i.name == name}.first.amount -= 20
+  stock.charcoals -= 8
 end
 
 tables(arr_tables, 1, 2, 'free')
@@ -91,12 +100,14 @@ puts "amount of charcoals - #{stock.charcoals}"
 reserv_table(arr_tables, 2)
 reserv_table(arr_tables, 4)
 reserv_table(arr_tables, 1)
-unreserv_table(arr_tables,1)
+unreserv_table(arr_tables, 1)
 
 puts "free tables № #{show_free_tables(arr_tables).join(', ')}"
 
 reserv_hookah(reserv_hookahs, stock)
 reserv_bowl(reserv_bowls, stock)
+choice_tobaco(stock, 'Dark_Side')
+p stock.arr_tobacco
 
 
 
