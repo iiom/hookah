@@ -43,9 +43,9 @@ class Order
     tmp = []
     if type_bowl == nil && id == nil
       array = []
-      stock.arr_bowls.each {|i| array  << i.type}
-      type_max = array.each_with_object({}) {|item, memo| memo[item] = array.count(item)}.max_by{|k, v| v}.first
-      id = stock.arr_bowls.select {|i| i.type == type_max }.sample.id
+      stock.arr_bowls.each {|i| array << i.type}
+      type_max = array.each_with_object({}) {|item, memo| memo[item] = array.count(item)}.max_by {|k, v| v}.first
+      id = stock.arr_bowls.select {|i| i.type == type_max}.sample.id
     end
     id = stock.arr_bowls.select {|i| i.type == type_bowl}.first.id if type_bowl != nil && id == nil
     (tmp = stock.arr_bowls.select {|i| i.id == id}).flatten!
