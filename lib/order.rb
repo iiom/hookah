@@ -33,7 +33,7 @@ class Order
   end
 
   # бронирование кальяна
-  def reserv_hookah(reserved_hookahs, stock, name_hookah = nil, id = nil)
+  def reserv_hookah(stock, name_hookah = nil, id = nil)
     tmp = []
     # по условию если не передано название кальяна (или его номер) то из массива выбираем любой кальян
     # по номеру, чтобы избежать проблем при дубляже при бронировании или снятии брони (в частности)
@@ -42,31 +42,22 @@ class Order
     # с таким именен и берём у него номер, чтобы избежать проблем при снятии брони если несколько кальянов
     # с одним названием.
     id = stock.arr_hookahs.select {|i| i.name == name_hookah}.first.id if name_hookah != nil && id == nil
+    # меняем статус этого кальяна
+    stock.arr_hookahs.select {|i| i.id == id}.first.status = 'reserv'
     # во временый массив заносится сущность кальяна по id расплющивая массив мутатором
     (tmp << stock.arr_hookahs.select {|i| i.id == id}).flatten!
-    # в массив кальянов которые в работе добавляем этот же кальян по id
-    (reserved_hookahs << stock.arr_hookahs.select {|i| i.id == id}).flatten!
-    # удаляем это кальян из массива со склада
-    stock.arr_hookahs.delete_if {|i| i.id == id}
-    # меняем статус этого кальяна
-    reserved_hookahs.select {|i| i.id == id}.first.status = 'reserv'
     # возвращаем временный массив с кальянов, чтобы передать его массив кальянов в заказ
     # order1.hookah << order1.reserv_hookah(reserved_hookahs, stock, nil, 3)
     tmp
   end
 
   # снятие брони кальяна
-  def unreserv_hookah(reserved_hookahs, stock, id)
-    # выбор конкретного кальяна для снятии брони
-    (stock.arr_hookahs << reserved_hookahs.select {|i| i.id == id}).flatten!
-    # удаляем его из массива кальянов тех что в работе
-    reserved_hookahs.delete_if {|i| i.id == id}
-    # меняем его статус на "свободный"
+  def unreserv_hookah(stock, id)
     stock.arr_hookahs.select {|i| i.id == id}.first.status = 'free'
   end
 
   # бронирование чаши
-  def reserv_bowl(reserved_bowls, stock, type_bowl = nil, id = nil)
+  def reserv_bowl(stock, type_bowl = nil, id = nil)
     tmp = []
     # по условию если не перданно какая чаща, то берётся та которых на складе больше всего по типу
     if type_bowl == nil && id == nil
@@ -84,22 +75,16 @@ class Order
     end
     # если по условию есть название чаши то по названию выбираются все чаши, берётся случайная и берётся её номер
     id = stock.arr_bowls.select {|i| i.type == type_bowl}.first.id if type_bowl != nil && id == nil
+    # меняется статус чаши на "в работе"
+    stock.arr_bowls.select {|i| i.id == id}.first.status = 'reserv'
     # во временный массив передаём этот объект чаши
     (tmp = stock.arr_bowls.select {|i| i.id == id}).flatten!
-    # добавляется эта чаша в массив чаш тех,что в работе
-    (reserved_bowls << stock.arr_bowls.select {|i| i.id == id}).flatten!
-    # удаляется эта чаша из массива со склада
-    stock.arr_bowls.delete_if {|i| i.id == id}
-    # меняется статус чаши на "в работе"
-    reserved_bowls.select {|i| i.id == id}.first.status = 'reserv'
     # возврашается временный массив для передачи его в масив чаш в заказ
     tmp
   end
 
   # снятие брони чаши
-  def unreserv_bowl(reserved_bowls, stock, id)
-    (stock.arr_bowls << reserved_bowls.select {|i| i.id == id}).flatten!
-    reserved_bowls.delete_if {|i| i.id == id}
+  def unreserv_bowl(stock, id)
     stock.arr_bowls.select {|i| i.id == id}.first.status = 'free'
   end
 
