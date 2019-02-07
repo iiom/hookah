@@ -10,6 +10,7 @@ class Stock
   end
 
   arr_tables = []
+
   def tables(id_table, seats_number, status)
     arr_tables << Table.new(id_table, seats_number, status)
   end
