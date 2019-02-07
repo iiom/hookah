@@ -5,11 +5,6 @@ require_relative 'lib/stock'
 require_relative 'lib/tobacco'
 require_relative 'lib/order'
 
-arr_tables = []
-def tables(arr_tables, id_table, seats_number, status)
-  arr_tables << Table.new(id_table, seats_number, status)
-end
-
 def show_id(where, type)
   temp_arr_id = []
   where.select {|elem| elem.status == type}.each {|elem| temp_arr_id << elem.id}
@@ -79,19 +74,12 @@ def choice_tobaco(stock, name)
   tmp
 end
 
-orders = []
-def order(numb)
-  Order.new(numb)
-end
-
-tables(arr_tables, 1, 2, 'free')
-tables(arr_tables, 2, 4, 'free')
-tables(arr_tables, 3, 6, 'free')
-tables(arr_tables, 4, 4, 'free')
-tables(arr_tables, 5, 6, 'free')
-
-
 stock = Stock.new
+stock.tables(1, 2, 'free')
+stock.tables(2, 4, 'free')
+stock.tables(3, 6, 'free')
+stock.tables(4, 4, 'free')
+stock.tables(5, 6, 'free')
 stock.add_charcoals(900)
 stock.hookahs('Khalil Mamoon', 1)
 stock.hookahs('Khalil Mamoon', 2)
@@ -114,15 +102,15 @@ stock.tobacco('Dokha', 220, 650)
 stock.tobacco('Nakhla', 180, 600)
 stock.tobacco('WTO', 200, 700)
 
-puts "amount of tables - #{arr_tables.size}"
+puts "amount of tables - #{stock.arr_tables.size}"
 puts "hookahs - #{stock.arr_hookahs.size}"
 puts "bowls - #{stock.arr_bowls.size}"
 puts "amount of tobacco - #{stock.arr_tobacco.size}"
 puts "amount of charcoals - #{stock.charcoals}"
 
 puts '_______________________________'
-order1 = order(1)
-order1.table = reserv_table(arr_tables, 5)
+order1 = Order.new(1)
+order1.table = reserv_table(stock.arr_tables, 5)
 order1.hookah << reserv_hookah(reserved_hookahs, stock, nil, 3)
 order1.bowl << reserv_bowl(reserved_bowls, stock)
 order1.tobacco << choice_tobaco(stock, 'Dark_Side')
@@ -132,8 +120,8 @@ puts "##{order1.order_number}\ntable ##{order1.table.first.id}\n"+
          "Tobacco - #{order1.tobacco.first.name}"
 
 puts '_______________________________'
-puts "free tables #: #{show_id(arr_tables, 'free').join(', ')}; " +
-         "reserved tables #: #{show_id(arr_tables, 'reserv').join(', ')}"
+puts "free tables #: #{show_id(stock.arr_tables, 'free').join(', ')}; " +
+         "reserved tables #: #{show_id(stock.arr_tables, 'reserv').join(', ')}"
 puts "free hookah #: #{show_id(stock.arr_hookahs, 'free').join(', ')}; " +
          "reserved hookah #: #{show_id(reserved_hookahs, 'reserv').join(', ')}"
 puts "free bowls #: #{show_id(stock.arr_bowls, 'free').join(', ')}; " +
