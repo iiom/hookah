@@ -10,17 +10,23 @@ class Order
     @tobacco = []
   end
 
+  def show_id(where, type)
+    temp_arr_id = []
+    where.select {|elem| elem.status == type}.each {|elem| temp_arr_id << elem.id}
+    temp_arr_id
+  end
+
   # бронирование стола
-  def reserv_table(arr_tables, id)
+  def reserv_table(stock, id)
     tmp = []
     # через селект выбираем из массива все элементы соответствующие условию. так как результат выполнения
     # select есть новый массив на нём дёргается метод first и выбирается сущность стола на котором вызывается
     # параметр status который создаётся при создании объекта и меняется статус с "свободного" на "резерв"
-    arr_tables.select {|elem| elem.id == id}.first.status = 'reserv'
+    stock.arr_tables.select {|elem| elem.id == id}.first.status = 'reserv'
     # во временый массив заносится сущность стола по id
-    tmp << arr_tables.select {|elem| elem.id == id}
+    tmp << stock.arr_tables.select {|elem| elem.id == id}
     # выводим сообщение если спосле брони столов не оказалось свободных
-    puts "no more free table" if show_id(arr_tables, 'free').size == 0
+    puts "no more free table" if show_id(stock.arr_tables, 'free').size == 0
     # возвращаем временный массив расплющивая его чтобы этот результат потом перенести в массив заказа
     # order1.table = order1.reserv_table(stock.arr_tables, 5)
     tmp.flatten!

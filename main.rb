@@ -35,7 +35,7 @@ stock.tobacco('WTO', 200, 700)
 
 
 order1 = Order.new(1)
-order1.table = order1.reserv_table(stock.arr_tables, 5)
+order1.table = order1.reserv_table(stock, 5)
 order1.hookah << order1.reserv_hookah(stock, nil, 3)
 order1.bowl << order1.reserv_bowl(stock)
 order1.tobacco << order1.choice_tobaco(stock, 'Dark_Side')
