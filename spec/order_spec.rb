@@ -69,4 +69,23 @@ describe 'order' do
   it 'change status after reserv bowl' do
     expect(@stock.arr_bowls.select{|i| i.id == 2}.first.status).to eq 'reserv'
   end
+
+  it 'return one of max count type' do
+    expect([3, 4].include?(@order1.reserv_bowl(@stock).first.id)).to eq true
+  end
+
+  it 'change status after unreserv table' do
+    @order1.unreserv_table(@stock.arr_tables, 5)
+    expect(@stock.arr_tables.select{|i| i.id == 5}.first.status).to eq 'free'
+  end
+
+  it 'change status after unreserv hookah' do
+    @order1.unreserv_hookah(@stock, 3)
+    expect(@stock.arr_hookahs.select{|i| i.id == 3}.first.status).to eq 'free'
+  end
+
+  it 'change status after unreserv bowl' do
+    @order1.unreserv_bowl(@stock, 2)
+    expect(@stock.arr_bowls.select{|i| i.id == 2}.first.status).to eq 'free'
+  end
 end
