@@ -44,3 +44,4 @@ puts '_______________________________'
 puts "##{order1.order_number}\ntable ##{order1.table.first.id}\n" +
          "Hookah - #{order1.hookah.flatten.first.name}\nBowl - #{order1.bowl.flatten.first.type}\n" +
          "Tobacco - #{order1.tobacco.first.name}"
+
