@@ -89,3 +89,4 @@ describe 'order' do
     expect(@stock.arr_bowls.select{|i| i.id == 2}.first.status).to eq 'free'
   end
 end
+
